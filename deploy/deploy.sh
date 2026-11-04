@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# Deploy wp-content/plugins/ember-oak-core to the server. Used by GitHub Actions and for manual deploys.
-#   DEPLOY_HOST=46.250.232.141 DEPLOY_USER=deploy SSH_OPTS="-i ~/.ssh/ember-oak-deploy" ./deploy/deploy.sh
-# Backs up the current plugin, rsyncs, flushes caches, runs a health check, and rolls back on failure.
+# Deploy wp-content/themes/aurelle-child to the server. Used by GitHub Actions and for manual deploys.
+#   DEPLOY_HOST=<ip> DEPLOY_USER=deploy SSH_OPTS="-i ~/.ssh/aurelle-deploy" ./deploy/deploy.sh
+# Backs up the current theme, rsyncs, flushes caches, runs a health check, and rolls back on failure.
 set -euo pipefail
 # Secrets are often pasted with stray spaces/newlines: strip CR/LF and surrounding whitespace from every input.
 trim() { printf '%s' "$1" | tr -d '\r\n' | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//'; }
 HOST="$(trim "${DEPLOY_HOST:?DEPLOY_HOST required}")"
 DUSER="$(trim "${DEPLOY_USER:-deploy}")"; DUSER="${DUSER:-deploy}"
 SITE_URL="$(trim "${SITE_URL:-}")"; SITE_URL="${SITE_URL:-http://$HOST}"
-REMOTE_ROOT="$(trim "${REMOTE_ROOT:-}")"; REMOTE_ROOT="${REMOTE_ROOT:-/var/www/ember-oak}"   # per project, e.g. /var/www/my-other-site
+REMOTE_ROOT="$(trim "${REMOTE_ROOT:-}")"; REMOTE_ROOT="${REMOTE_ROOT:-/var/www/aurelle}"
 SITE_PORT="$(trim "${SITE_PORT:-}")"                    # optional; defaults to the port in SITE_URL, else 80/443
-PLUGIN_DIR="$(trim "${PLUGIN_DIR:-}")"; PLUGIN_DIR="${PLUGIN_DIR:-ember-oak-core}"           # plugin folder to deploy for this project
+PLUGIN_DIR="$(trim "${PLUGIN_DIR:-}")"; PLUGIN_DIR="${PLUGIN_DIR:-aurelle-child}"
 THEME_DIR="$(trim "${THEME_DIR:-}")"                    # optional; if set, deploy to themes/ instead of plugins/
 # Fail fast, before touching the server, if a value is malformed (a relative REMOTE_ROOT once created a stray dir in $HOME).
 [[ "$REMOTE_ROOT" =~ ^/[A-Za-z0-9._/-]+$ && "$REMOTE_ROOT" != *..* ]] || { echo "::error::REMOTE_ROOT must be an absolute path like /var/www/my-site (got '${REMOTE_ROOT}')"; exit 2; }
@@ -87,7 +87,7 @@ echo "==> post-deploy"; post_deploy
 echo "==> health check"
 if health; then
   echo "HEALTH_OK"
-  R "ls -1t /var/backups/$PROJECT/$PLUGIN_DIR-*.tgz 2>/dev/null | tail -n +6 | xargs -r rm -f"
+  R "ls -1t /var/backups/$PROJECT/$DEPLOY_LABEL-*.tgz 2>/dev/null | tail -n +6 | xargs -r rm -f"
 else
   echo "HEALTH_FAILED -> rolling back to $BK" >&2
   R "rm -rf '$DEST' && tar -xzf '$BK' -C '$CONTENT_DIR' && $CHOWN"
