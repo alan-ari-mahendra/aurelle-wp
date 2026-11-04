@@ -51,16 +51,15 @@ jobs:
         env:
           DEPLOY_HOST: ${{ secrets.SSH_HOST }}
           DEPLOY_USER: ${{ secrets.SSH_USER }}
-          SSH_OPTS: "-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
           REMOTE_ROOT: ${{ secrets.REMOTE_ROOT }}
         run: |
+          SSH_OPTS="-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
           ssh $SSH_OPTS -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" "whoami && test -f '$REMOTE_ROOT/wp-config.php' && echo 'wp-config OK' || echo 'wp-config MISSING at '$REMOTE_ROOT"
 
       - name: Deploy theme
         env:
           DEPLOY_HOST: ${{ secrets.SSH_HOST }}
           DEPLOY_USER: ${{ secrets.SSH_USER }}
-          SSH_OPTS: "-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes"
           SITE_URL: ${{ secrets.SITE_URL }}
           SITE_PORT: ${{ secrets.SITE_PORT }}
           REMOTE_ROOT: ${{ secrets.REMOTE_ROOT }}
@@ -68,4 +67,6 @@ jobs:
           PROJECT: aurelle
           HEALTH_MARKER: au-page
           HEALTH_PATH: /
-        run: bash deploy/deploy.sh
+        run: |
+          export SSH_OPTS="-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes"
+          bash deploy/deploy.sh
