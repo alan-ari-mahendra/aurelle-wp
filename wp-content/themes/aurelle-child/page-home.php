@@ -7,6 +7,10 @@
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:image" content="<?php echo get_stylesheet_directory_uri(); ?>/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
 <?php wp_head(); ?>
 </head>
 <body class="au-page">
@@ -111,9 +115,9 @@
       <!-- Decorative ring -->
       <div aria-hidden="true" style="position:absolute;left:0;top:70px;width:230px;height:230px;border-radius:50%;border:1px solid var(--rose);opacity:0.7;pointer-events:none;"></div>
 
-      <!-- Hero image placeholder -->
-      <div class="au-ph" style="position:absolute;right:0;top:0;width:78%;height:100%;border-radius:999px 999px 28px 28px;box-shadow:var(--shadow);">
-        <span>Photo: hero treatment close-up 4:5</span>
+      <!-- Hero image -->
+      <div style="position:absolute;right:0;top:0;width:78%;height:100%;border-radius:999px 999px 28px 28px;box-shadow:var(--shadow);overflow:hidden;">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/hero-treatment.jpg" alt="Esthetician applying a brightening facial mask to a client at Aurelle Skin Clinic" style="width:100%;height:100%;object-fit:cover;object-position:center;" loading="eager">
       </div>
 
       <!-- Est badge -->
@@ -174,8 +178,12 @@
 
     <!-- Images -->
     <div style="position:relative;">
-      <div class="au-ph" style="border-radius:28px;aspect-ratio:4/5;">Photo: clinic interior or treatment room 4:5</div>
-      <div class="au-ph au-about-circle-img" style="position:absolute;left:-60px;bottom:60px;width:46%;aspect-ratio:1;border-radius:50%;border:10px solid var(--cream);box-shadow:0 30px 60px -30px rgba(42,38,48,0.3);">Photo 1:1</div>
+      <div style="border-radius:28px;aspect-ratio:4/5;overflow:hidden;background:var(--lavender2);">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/about-clinic-main.jpg" alt="Client receiving a relaxing facial treatment with a warm towel wrap at Aurelle Skin Clinic" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
+      <div class="au-about-circle-img" style="position:absolute;left:-60px;bottom:60px;width:46%;aspect-ratio:1;border-radius:50%;border:10px solid var(--cream);box-shadow:0 30px 60px -30px rgba(42,38,48,0.3);overflow:hidden;">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/about-consultation-detail.jpg" alt="Close-up of an esthetician's hands during a precise skincare consultation" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
     </div>
 
     <!-- Copy -->
@@ -285,7 +293,9 @@
 
     <!-- Photo -->
     <div style="position:relative;">
-      <div class="au-ph" style="border-radius:28px 28px 240px 240px;aspect-ratio:4/5;">Photo: doctor portrait in white coat 4:5</div>
+      <div style="border-radius:28px 28px 240px 240px;aspect-ratio:4/5;overflow:hidden;background:var(--rose3);">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/doctor-portrait.jpg" alt="Portrait of Dr. Elena Marchetti, board-certified dermatologist at Aurelle Skin Clinic" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+      </div>
       <div style="position:absolute;right:-30px;top:40px;background:#fff;border-radius:18px;padding:16px 22px;box-shadow:0 20px 40px -20px rgba(42,38,48,0.3);font-size:13px;">
         <b style="display:block;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;">Dr. Elena Marchetti</b>
         <small style="color:var(--muted);">Board-certified dermatologist</small>
@@ -374,11 +384,21 @@
     <div class="au-results-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;">
 
       <figure style="margin:0;">
-        <div class="au-ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative;">
-          <span>Photo: before/after laser</span>
-          <span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff;"></span>
-          <span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">Before</span>
-          <span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">After</span>
+        <div class="au-compare" role="img" aria-label="Laser Resurfacing before and after comparison">
+          <!-- After (dummy, bottom layer) -->
+          <img class="au-compare__after" src="https://placehold.co/600x690/F4E6E1/C9A092?text=After" alt="After laser resurfacing — 3 sessions" draggable="false">
+          <!-- Before (real photo, top layer, clipped) -->
+          <div class="au-compare__before-wrap">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-laser-resurfacing.jpg" alt="Before laser resurfacing treatment" draggable="false">
+          </div>
+          <!-- Divider + handle -->
+          <div class="au-compare__line">
+            <div class="au-compare__handle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 5L2 9L6 13M12 5L16 9L12 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <span class="au-compare__label au-compare__label--before">Before</span>
+          <span class="au-compare__label au-compare__label--after">After</span>
         </div>
         <figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);">
           <b style="font-weight:500;color:var(--ink);">Laser Resurfacing</b>
@@ -387,11 +407,18 @@
       </figure>
 
       <figure style="margin:0;">
-        <div class="au-ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative;">
-          <span>Photo: before/after acne</span>
-          <span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff;"></span>
-          <span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">Before</span>
-          <span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">After</span>
+        <div class="au-compare" role="img" aria-label="Acne and scar program before and after comparison">
+          <img class="au-compare__after" src="https://placehold.co/600x690/ECE8F4/9B8DB3?text=After" alt="After acne and scar program — 12 weeks" draggable="false">
+          <div class="au-compare__before-wrap">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-acne-scar-program.jpg" alt="Before acne and scar treatment" draggable="false">
+          </div>
+          <div class="au-compare__line">
+            <div class="au-compare__handle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 5L2 9L6 13M12 5L16 9L12 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <span class="au-compare__label au-compare__label--before">Before</span>
+          <span class="au-compare__label au-compare__label--after">After</span>
         </div>
         <figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);">
           <b style="font-weight:500;color:var(--ink);">Acne &amp; Scar Program</b>
@@ -400,11 +427,18 @@
       </figure>
 
       <figure style="margin:0;">
-        <div class="au-ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative;">
-          <span>Photo: before/after peel</span>
-          <span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff;"></span>
-          <span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">Before</span>
-          <span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:var(--ink);">After</span>
+        <div class="au-compare" role="img" aria-label="Skin brightening peel before and after comparison">
+          <img class="au-compare__after" src="https://placehold.co/600x690/F1ECE4/B89B6E?text=After" alt="After skin brightening peel — 4 sessions" draggable="false">
+          <div class="au-compare__before-wrap">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-skin-brightening.jpg" alt="Before skin brightening treatment" draggable="false">
+          </div>
+          <div class="au-compare__line">
+            <div class="au-compare__handle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 5L2 9L6 13M12 5L16 9L12 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <span class="au-compare__label au-compare__label--before">Before</span>
+          <span class="au-compare__label au-compare__label--after">After</span>
         </div>
         <figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);">
           <b style="font-weight:500;color:var(--ink);">Skin Brightening Peel</b>

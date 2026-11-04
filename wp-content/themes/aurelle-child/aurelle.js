@@ -63,6 +63,50 @@
     });
   }
 
+  // Compare sliders — autoplay bouncing + hover follows cursor
+  document.querySelectorAll('.au-compare').forEach(function (el) {
+    var rafId = null;
+    var startTime = null;
+    var CYCLE = 4000; // ms per half-cycle (0→100 or 100→0)
+
+    function setPercent(pct) {
+      el.style.setProperty('--pct', pct + '%');
+    }
+
+    function tick(ts) {
+      if (!startTime) startTime = ts;
+      var elapsed = ts - startTime;
+      var progress = (elapsed % (CYCLE * 2)) / CYCLE;
+      var pct = progress <= 1 ? progress * 100 : (2 - progress) * 100;
+      setPercent(pct);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startAutoplay() {
+      startTime = null;
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopAutoplay() {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+
+    function hoverPercent(clientX) {
+      var rect = el.getBoundingClientRect();
+      return Math.max(0, Math.min(100, (clientX - rect.left) / rect.width * 100));
+    }
+
+    el.addEventListener('mouseenter', stopAutoplay);
+
+    el.addEventListener('mousemove', function (e) {
+      setPercent(hoverPercent(e.clientX));
+    });
+
+    el.addEventListener('mouseleave', startAutoplay);
+
+    startAutoplay();
+  });
+
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
