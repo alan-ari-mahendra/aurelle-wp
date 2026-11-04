@@ -9,6 +9,13 @@ on:
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: Lint
@@ -16,52 +23,65 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: PHP syntax check
-        run: find wp-content/themes/aurelle-child -name '*.php' -print0 | xargs -0 -P4 php -l
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
 
-      - name: Bash syntax check
-        run: bash -n deploy/deploy.sh
-
-      - name: Check for embedded secrets
+      - name: PHP syntax (aurelle-child)
         run: |
-          if grep -rE '(AKIA|sk-|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY)' wp-content/themes/aurelle-child/ 2>/dev/null; then
-            echo "::error::Possible secret embedded in theme files"; exit 1
+          fail=0
+          while IFS= read -r -d '' f; do
+            php -l "$f" >/dev/null || { echo "::error file=$f::PHP syntax error"; fail=1; }
+          done < <(find wp-content/themes/aurelle-child -name '*.php' -print0)
+          exit $fail
+
+      - name: Shell syntax (deploy scripts)
+        run: for f in deploy/*.sh; do bash -n "$f"; done
+
+      - name: Reject hard-coded secrets
+        run: |
+          if grep -rInE "(password|passwd|secret|api[_-]?key|private[_ -]?key)['\"]?\s*[:=]>?\s*['\"][^'\"]{8,}['\"]" wp-content/themes/aurelle-child; then
+            echo "::error::possible hard-coded secret in aurelle-child"; exit 1
           fi
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
     needs: lint
+    runs-on: ubuntu-latest
     environment: production
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup SSH
+      - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$RUNNER_TEMP/deploy_key"
+          chmod 600 "$RUNNER_TEMP/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$RUNNER_TEMP/known_hosts"
+          echo "=== key line count ==="
+          wc -l "$RUNNER_TEMP/deploy_key"
+          head -1 "$RUNNER_TEMP/deploy_key"
+          tail -1 "$RUNNER_TEMP/deploy_key"
 
-      - name: Debug SSH connection
+      - name: Debug SSH
         env:
           DEPLOY_HOST: ${{ secrets.SSH_HOST }}
           DEPLOY_USER: ${{ secrets.SSH_USER }}
-          REMOTE_ROOT: ${{ secrets.REMOTE_ROOT }}
         run: |
-          echo "=== Key file check ==="
-          wc -l ~/.ssh/deploy_key
-          head -1 ~/.ssh/deploy_key
-          tail -1 ~/.ssh/deploy_key
-          echo "=== SSH verbose ==="
-          SSH_OPTS="-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
-          ssh -v $SSH_OPTS -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" "whoami && test -f '$REMOTE_ROOT/wp-config.php' && echo 'wp-config OK' || echo 'wp-config MISSING at '$REMOTE_ROOT" 2>&1 || true
+          ssh -v \
+            -i "$RUNNER_TEMP/deploy_key" \
+            -o IdentitiesOnly=yes \
+            -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" \
+            -o StrictHostKeyChecking=yes \
+            -o BatchMode=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" whoami 2>&1 || true
 
-      - name: Deploy theme
+      - name: Deploy theme (backup, rsync, health check, auto-rollback)
         env:
           DEPLOY_HOST: ${{ secrets.SSH_HOST }}
           DEPLOY_USER: ${{ secrets.SSH_USER }}
@@ -72,6 +92,9 @@ jobs:
           PROJECT: aurelle
           HEALTH_MARKER: au-page
           HEALTH_PATH: /
-        run: |
-          export SSH_OPTS="-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes"
-          bash deploy/deploy.sh
+          SSH_OPTS: -i ${{ runner.temp }}/deploy_key -o IdentitiesOnly=yes -o UserKnownHostsFile=${{ runner.temp }}/known_hosts -o StrictHostKeyChecking=yes
+        run: bash deploy/deploy.sh
+
+      - name: Remove key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/deploy_key" "$RUNNER_TEMP/known_hosts"
