@@ -53,8 +53,13 @@ jobs:
           DEPLOY_USER: ${{ secrets.SSH_USER }}
           REMOTE_ROOT: ${{ secrets.REMOTE_ROOT }}
         run: |
+          echo "=== Key file check ==="
+          wc -l ~/.ssh/deploy_key
+          head -1 ~/.ssh/deploy_key
+          tail -1 ~/.ssh/deploy_key
+          echo "=== SSH verbose ==="
           SSH_OPTS="-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
-          ssh $SSH_OPTS -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" "whoami && test -f '$REMOTE_ROOT/wp-config.php' && echo 'wp-config OK' || echo 'wp-config MISSING at '$REMOTE_ROOT"
+          ssh -v $SSH_OPTS -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" "whoami && test -f '$REMOTE_ROOT/wp-config.php' && echo 'wp-config OK' || echo 'wp-config MISSING at '$REMOTE_ROOT" 2>&1 || true
 
       - name: Deploy theme
         env:
