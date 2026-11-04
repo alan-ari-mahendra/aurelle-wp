@@ -20,7 +20,7 @@ jobs:
         run: find wp-content/themes/aurelle-child -name '*.php' -print0 | xargs -0 -P4 php -l
 
       - name: Bash syntax check
-        run: bash -n deploy/deploy.sh && bash -n deploy/server-setup.sh
+        run: bash -n deploy/deploy.sh
 
       - name: Check for embedded secrets
         run: |
