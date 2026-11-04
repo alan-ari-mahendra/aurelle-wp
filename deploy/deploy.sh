@@ -75,12 +75,10 @@ post_deploy() {
   R "cd '$REMOTE_ROOT' && ${WPU}wp cache flush >/dev/null 2>&1 || true; ${flush_elementor}$([ "$DUSER" = root ] && echo systemctl || echo sudo -n /usr/bin/systemctl) reload php8.3-fpm"
 }
 health() {
-  local HOSTHDR="$SITE_HOST"; case "$SITE_PORT" in 80|443) ;; *) HOSTHDR="$SITE_HOST:$SITE_PORT";; esac   # WP redirects when Host lacks the port
-  # checked on the server itself so it does not depend on runner->VPS networking
-  local base="$SCHEME://127.0.0.1:$SITE_PORT"; local k=""; [ "$SCHEME" = https ] && k="-k"
-  R "set -e; H=\$(curl -fsS $k -m 25 -H 'Host: $HOSTHDR' $base/); echo \"\$H\" | grep -q '${HEALTH_MARKER:-eo-header}'; \
-     curl -fsS $k -m 25 -o /dev/null -H 'Host: $HOSTHDR' $base/wp-json/; \
-     curl -fsS $k -m 25 -o /dev/null -H 'Host: $HOSTHDR' '$base${HEALTH_PATH:-/product/guji-natural/}'"
+  local HOSTHDR="$SITE_HOST"; case "$SITE_PORT" in 80|443) ;; *) HOSTHDR="$SITE_HOST:$SITE_PORT";; esac
+  local base="$SCHEME://127.0.0.1:$SITE_PORT"
+  R "set -e; H=\$(curl -fsSkL -m 25 -H 'Host: $HOSTHDR' $base${HEALTH_PATH:-/}); echo \"\$H\" | grep -q '${HEALTH_MARKER:-au-page}'; \
+     curl -fsSkL -m 25 -o /dev/null -H 'Host: $HOSTHDR' $base/wp-json/"
 }
 
 echo "==> post-deploy"; post_deploy
