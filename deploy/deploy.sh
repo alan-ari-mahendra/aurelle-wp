@@ -77,8 +77,25 @@ post_deploy() {
 health() {
   local HOSTHDR="$SITE_HOST"; case "$SITE_PORT" in 80|443) ;; *) HOSTHDR="$SITE_HOST:$SITE_PORT";; esac
   local base="$SCHEME://127.0.0.1:$SITE_PORT"
-  R "set -e; H=\$(curl -fsSkL -m 25 -H 'Host: $HOSTHDR' $base${HEALTH_PATH:-/}); echo \"\$H\" | grep -q '${HEALTH_MARKER:-au-page}'; \
-     curl -fsSkL -m 25 -o /dev/null -H 'Host: $HOSTHDR' $base/wp-json/"
+  R "
+    echo '--- curl homepage ---'
+    HTTP=\$(curl -sSLw '\n%{http_code}' -m 25 -H 'Host: $HOSTHDR' -k $base${HEALTH_PATH:-/})
+    CODE=\$(printf '%s' \"\$HTTP\" | tail -1)
+    H=\$(printf '%s' \"\$HTTP\" | head -n -1)
+    echo \"HTTP status: \$CODE\"
+    if echo \"\$H\" | grep -q '${HEALTH_MARKER:-au-page}'; then
+      echo 'marker OK: ${HEALTH_MARKER:-au-page}'
+    else
+      echo '::error::marker NOT found: ${HEALTH_MARKER:-au-page}'
+      echo \"--- body snippet ---\"
+      echo \"\$H\" | head -20
+      exit 1
+    fi
+    echo '--- curl wp-json ---'
+    WJ=\$(curl -sSLw '%{http_code}' -m 25 -o /dev/null -H 'Host: $HOSTHDR' -k $base/wp-json/)
+    echo \"wp-json HTTP status: \$WJ\"
+    case \"\$WJ\" in 2*) ;; *) echo '::error::wp-json returned '\$WJ; exit 1;; esac
+  "
 }
 
 echo "==> post-deploy"; post_deploy
