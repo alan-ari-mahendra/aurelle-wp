@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aurelle Clinic, desktop landing page</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2A2630}a:hover{color:#C9A092}
+.au{font-family:"Jost","Helvetica Neue",Arial,sans-serif;font-weight:300;color:#2A2630;background:#F8F5F0;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.au *{box-sizing:border-box}
+.au h1,.au h2,.au h3,.au h4{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.08;margin:0;letter-spacing:-0.01em}
+.au p{margin:0}
+.au em{font-style:italic;font-weight:400;color:#C9A092}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#C9A092;font-weight:500;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:28px;height:1px;background:#C9A092}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid transparent;text-decoration:none;font-family:inherit;cursor:pointer;min-height:44px}
+.btn-dark{background:#2A2630;color:#fff}
+.btn-dark:hover{background:#3b3542;color:#fff}
+.btn-ghost{border-color:#2A2630;color:#2A2630;background:transparent}
+.btn .arr{width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;background:rgba(255,255,255,0.14)}
+.btn svg{width:14px;height:14px}
+.ph{background:linear-gradient(135deg,#F4E6E1,#ECE8F4 60%,#F1ECE4);display:flex;align-items:center;justify-content:center;text-align:center;color:#8E8793;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:16px}
+.pill{padding:10px 22px;border:1px solid #E6E0D8;border-radius:999px;font-size:13px;letter-spacing:0.04em;color:#5E5866;white-space:nowrap;display:inline-flex;align-items:center;gap:10px;background:#fff}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:#C9A092}
+.tcard{border:1px solid #E6E0D8;border-radius:24px;padding:34px 30px 30px;background:#F8F5F0;position:relative}
+.tcard .ico{width:58px;height:58px;border-radius:50%;border:1px solid #E7CFC6;display:grid;place-items:center;margin-bottom:26px;background:#fff}
+.tcard .ico svg{width:26px;height:26px;stroke:#C9A092;fill:none;stroke-width:1.2}
+.tcard h3{font-size:28px;margin-bottom:10px}
+.tcard p{font-size:14px;color:#5E5866;min-height:66px}
+.tcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid #E6E0D8;font-size:13px}
+.tcard .foot b{font-weight:500;font-size:15px}
+.tcard .foot small{color:#8E8793;display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase}
+.tcard .foot a{display:inline-flex;align-items:center;gap:8px;color:#C9A092;font-weight:500;text-decoration:none;min-height:44px}
+.tcard .num{position:absolute;right:22px;top:20px;font-family:"Cormorant Garamond",serif;font-style:italic;color:#E7CFC6;font-size:22px}
+.ghost{position:absolute;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:200px;color:transparent;-webkit-text-stroke:1px #E7CFC6;line-height:1;pointer-events:none;white-space:nowrap}
+.qcard{background:#fff;border-radius:24px;padding:34px 32px;position:relative}
+.qcard .q{font-family:"Cormorant Garamond",serif;font-size:60px;line-height:0.6;color:#E7CFC6;margin-bottom:20px}
+.qcard p{font-size:15px;color:#5E5866;margin-bottom:26px}
+.qcard .who{display:flex;align-items:center;gap:14px}
+.qcard .who span{width:44px;height:44px;border-radius:50%;background:#D9D4EA;flex:none}
+.qcard .who b{display:block;font-weight:500;font-size:14px}
+.qcard .who small{color:#8E8793;font-size:12px}
+.qcard .stars{position:absolute;right:28px;top:30px;color:#B89B6E;letter-spacing:2px;font-size:12px}
+.field{display:grid;gap:8px;margin-bottom:16px}
+.field label{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5E5866}
+.field input,.field select{font-family:inherit;font-size:14.5px;font-weight:300;padding:15px 18px;border:1px solid #E6E0D8;border-radius:14px;background:#F8F5F0;color:#2A2630;width:100%;appearance:none;min-height:44px}
+.hours div{display:flex;justify-content:space-between;font-size:14px;padding:10px 0;border-top:1px solid #E6E0D8;color:#5E5866}
+.hours div b{font-weight:500;color:#2A2630}
+.flist{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:14px;color:rgba(255,255,255,0.72)}
+.fh5{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#E7CFC6;margin:0 0 18px;font-weight:500;font-family:"Jost",sans-serif}
+</style>
+</helmet>
+
+<div class="au" style="width:100%;min-height:100px;position:relative">
+
+<!-- NAV -->
+<header style="position:absolute;left:0;right:0;top:0;z-index:10;padding:22px 0">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#top" style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:10px;text-decoration:none"><span style="width:30px;height:30px;border-radius:50%;border:1px solid #C9A092;display:inline-grid;place-items:center;font-size:14px;color:#C9A092;letter-spacing:0">A</span>Aurelle</a>
+    <nav style="display:flex;gap:34px;font-size:13px;letter-spacing:0.06em;color:#5E5866;font-weight:400">
+      <a href="#treatments" style="text-decoration:none;color:#5E5866">Treatments</a>
+      <a href="#doctor" style="text-decoration:none;color:#5E5866">Our Doctor</a>
+      <a href="#results" style="text-decoration:none;color:#5E5866">Results</a>
+      <a href="#reviews" style="text-decoration:none;color:#5E5866">Reviews</a>
+      <a href="#book" style="text-decoration:none;color:#5E5866">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:22px;font-size:13px">
+      <span style="color:#5E5866;letter-spacing:0.04em">+1 (415) 555 0182</span>
+      <a href="#book" class="btn btn-dark" style="padding:12px 22px;font-size:13px">Book Appointment</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" style="position:relative;min-height:900px;padding:150px 0 70px;display:flex;align-items:center;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;border-radius:50%;filter:blur(70px);width:620px;height:620px;right:-140px;top:-120px;background:radial-gradient(circle,rgba(217,212,234,0.95),rgba(217,212,234,0) 70%)"></div>
+  <div aria-hidden="true" style="position:absolute;border-radius:50%;filter:blur(70px);width:540px;height:540px;right:220px;bottom:-240px;background:radial-gradient(circle,rgba(231,207,198,0.9),rgba(231,207,198,0) 70%)"></div>
+  <div class="wrap" style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:60px;align-items:center">
+    <div style="display:flex;flex-direction:column;align-items:flex-start">
+      <div class="eyebrow">Aesthetic &amp; Dermatology Clinic</div>
+      <h1 style="font-size:84px;margin:22px 0 26px">Skin that feels<br>like you, <em>only brighter.</em></h1>
+      <p style="font-size:17px;color:#5E5866;max-width:460px;margin-bottom:38px">Medical-grade skincare treatments, personalised by board-certified dermatologists. Natural results, zero guesswork.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <a href="#book" class="btn btn-dark">Book a Consultation <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+        <a href="#treatments" class="btn btn-ghost">View Treatments</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;margin-top:46px;padding-top:28px;border-top:1px solid #E6E0D8;width:100%;max-width:520px">
+        <div style="display:flex">
+          <span style="width:38px;height:38px;border-radius:50%;border:2px solid #F8F5F0;background:#D9D4EA"></span>
+          <span style="width:38px;height:38px;border-radius:50%;border:2px solid #F8F5F0;background:#E7CFC6;margin-left:-10px"></span>
+          <span style="width:38px;height:38px;border-radius:50%;border:2px solid #F8F5F0;background:#D5C4B8;margin-left:-10px"></span>
+          <span style="width:38px;height:38px;border-radius:50%;border:2px solid #F8F5F0;background:#CFCAD8;margin-left:-10px"></span>
+        </div>
+        <div>
+          <div style="color:#B89B6E;letter-spacing:2px;font-size:13px">★★★★★ <b style="font-weight:500;font-size:15px;color:#2A2630;letter-spacing:0">4.9</b></div>
+          <small style="display:block;font-size:13px;color:#8E8793">Trusted by 10,000+ clients since 2011</small>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;height:620px">
+      <div aria-hidden="true" style="position:absolute;left:0;top:70px;width:230px;height:230px;border-radius:50%;border:1px solid #C9A092;opacity:0.7"></div>
+      <div class="ph" style="position:absolute;right:0;top:0;width:78%;height:100%;border-radius:999px 999px 28px 28px;box-shadow:0 40px 80px -30px rgba(42,38,48,0.25)">Photo: hero, treatment close-up, portrait 4:5</div>
+      <div style="position:absolute;right:30px;top:-18px;width:120px;height:120px;border-radius:50%;background:#2A2630;color:#fff;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px">est.<span style="position:absolute;bottom:14px;font-family:'Jost',sans-serif;font-style:normal;font-size:9px;letter-spacing:0.2em;text-transform:uppercase">since 2011</span></div>
+      <div style="position:absolute;left:-10px;bottom:120px;min-width:230px;background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:18px 20px;box-shadow:0 24px 50px -24px rgba(42,38,48,0.35);font-size:13px">
+        <span style="width:8px;height:8px;border-radius:50%;background:#6FBF9A;display:inline-block;margin-right:8px"></span><small style="color:#8E8793">Next available slot</small>
+        <b style="display:block;font-weight:500;font-size:15px;margin-top:4px">Today, 3:30 PM</b>
+      </div>
+      <div style="position:absolute;right:-14px;bottom:50px;display:flex;gap:14px;align-items:center;background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:18px 20px;box-shadow:0 24px 50px -24px rgba(42,38,48,0.35);font-size:13px">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">98%</span>
+        <div><b style="font-weight:500">Would recommend</b><small style="color:#8E8793;display:block">Based on 2,400 reviews</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div style="padding:22px 0;border-top:1px solid #E6E0D8;border-bottom:1px solid #E6E0D8;background:#fff;overflow:hidden">
+  <div style="display:flex;gap:14px;width:max-content;padding-left:24px">
+    <span class="pill">Laser Resurfacing</span><span class="pill">Hydrafacial</span><span class="pill">Dermal Fillers</span><span class="pill">Chemical Peel</span><span class="pill">Microneedling</span><span class="pill">Acne &amp; Scars</span><span class="pill">Anti-Wrinkle</span><span class="pill">Skin Brightening</span><span class="pill">Collagen Boost</span><span class="pill">Laser Hair Removal</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section style="padding:120px 0">
+  <div class="wrap" style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:80px;align-items:center">
+    <div style="position:relative">
+      <div class="ph" style="border-radius:28px;aspect-ratio:4/5">Photo: clinic interior or treatment room, 4:5</div>
+      <div class="ph" style="position:absolute;left:-60px;bottom:60px;width:46%;aspect-ratio:1;border-radius:50%;border:10px solid #F8F5F0;box-shadow:0 30px 60px -30px rgba(42,38,48,0.3)">Photo: skincare detail, 1:1</div>
+    </div>
+    <div>
+      <div class="eyebrow">About the clinic</div>
+      <h2 style="font-size:52px;margin:20px 0 24px">Fifteen years of <em>honest</em> skincare.</h2>
+      <p style="color:#5E5866;font-size:16px;max-width:480px">We believe great skin is the result of science, patience and care. Every treatment plan starts with a thorough skin analysis, so you only receive what your skin actually needs.</p>
+      <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:22px;margin-top:40px">
+        <div style="border-top:1px solid #E6E0D8;padding-top:18px"><b style="display:block;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;line-height:1">15+</b><small style="font-size:13px;color:#8E8793;display:block;margin-top:6px">Years of practice</small></div>
+        <div style="border-top:1px solid #E6E0D8;padding-top:18px"><b style="display:block;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;line-height:1">10k</b><small style="font-size:13px;color:#8E8793;display:block;margin-top:6px">Happy clients</small></div>
+        <div style="border-top:1px solid #E6E0D8;padding-top:18px"><b style="display:block;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;line-height:1">32</b><small style="font-size:13px;color:#8E8793;display:block;margin-top:6px">Treatments offered</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENTS -->
+<section id="treatments" style="padding:110px 0 120px;background:#fff">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px">
+      <div>
+        <div class="eyebrow">Our treatments</div>
+        <h2 style="font-size:52px;margin-top:18px">Tailored to your skin, <em>not a trend.</em></h2>
+      </div>
+      <p style="max-width:380px;color:#5E5866;font-size:15px">From gentle facials to advanced laser work, each treatment is performed by licensed practitioners using FDA-cleared devices.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:22px">
+      <div class="tcard"><span class="num">01</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 4v16M4 12h16"></path></svg></div><h3>Hydrafacial</h3><p>Deep cleanse, exfoliate and hydrate in one 45-minute session. No downtime, instant glow.</p><div class="foot"><div><small>From</small><b>$149</b></div><a href="#book">Book →</a></div></div>
+      <div class="tcard"><span class="num">02</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L20 4M8 4h12v12"></path></svg></div><h3>Laser Resurfacing</h3><p>Smooth texture, fade sun damage and fine lines with fractional CO2 technology.</p><div class="foot"><div><small>From</small><b>$390</b></div><a href="#book">Book →</a></div></div>
+      <div class="tcard"><span class="num">03</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"></path></svg></div><h3>Dermal Fillers</h3><p>Restore volume and definition with subtle, natural-looking hyaluronic acid fillers.</p><div class="foot"><div><small>From</small><b>$520</b></div><a href="#book">Book →</a></div></div>
+      <div class="tcard"><span class="num">04</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16c4-8 12-8 16 0M4 20h16"></path></svg></div><h3>Chemical Peel</h3><p>Medical-grade peels to brighten tone, reduce pigmentation and refine pores.</p><div class="foot"><div><small>From</small><b>$180</b></div><a href="#book">Book →</a></div></div>
+      <div class="tcard"><span class="num">05</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M6 18L18 6M6 6l12 12"></path></svg></div><h3>Microneedling</h3><p>Stimulate collagen for firmer skin and visibly reduced acne scars and stretch marks.</p><div class="foot"><div><small>From</small><b>$260</b></div><a href="#book">Book →</a></div></div>
+      <div class="tcard"><span class="num">06</span><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17.5 6.5 21 8 13.5 3 9l6.5-.5z"></path></svg></div><h3>Anti-Wrinkle</h3><p>Soften expression lines on the forehead, frown and eye area with precise injectables.</p><div class="foot"><div><small>From</small><b>$240</b></div><a href="#book">Book →</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTOR -->
+<section id="doctor" style="padding:130px 0;position:relative;overflow:hidden">
+  <span class="ghost" aria-hidden="true" style="right:-40px;top:40px">Doctor</span>
+  <div class="wrap" style="display:grid;grid-template-columns:0.95fr 1.05fr;gap:90px;align-items:center;position:relative">
+    <div style="position:relative">
+      <div class="ph" style="border-radius:28px 28px 240px 240px;aspect-ratio:4/5">Photo: doctor portrait in white coat, 4:5</div>
+      <div style="position:absolute;right:-30px;top:40px;background:#fff;border-radius:18px;padding:16px 22px;box-shadow:0 20px 40px -20px rgba(42,38,48,0.3);font-size:13px"><b style="display:block;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500">Dr. Elena Marchetti</b><small style="color:#8E8793">Board-certified dermatologist</small></div>
+    </div>
+    <div>
+      <div class="eyebrow">Meet your doctor</div>
+      <h2 style="font-size:52px;margin:20px 0 22px">Care that starts with <em>listening.</em></h2>
+      <p style="color:#5E5866;font-size:16px;max-width:520px;margin-bottom:18px">Dr. Marchetti has spent over fifteen years in medical and aesthetic dermatology, with a focus on conservative, long-term skin health rather than quick fixes.</p>
+      <p style="color:#5E5866;font-size:16px;max-width:520px">Every first visit includes a 30-minute consultation and digital skin analysis, so your plan is built on evidence, not assumptions.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 36px">
+        <span style="padding:9px 16px;border-radius:999px;background:#ECE8F4;font-size:12px;letter-spacing:0.06em;color:#5E5866">MD, Dermatology</span>
+        <span style="padding:9px 16px;border-radius:999px;background:#ECE8F4;font-size:12px;letter-spacing:0.06em;color:#5E5866">American Board of Dermatology</span>
+        <span style="padding:9px 16px;border-radius:999px;background:#ECE8F4;font-size:12px;letter-spacing:0.06em;color:#5E5866">ASDS Member</span>
+        <span style="padding:9px 16px;border-radius:999px;background:#ECE8F4;font-size:12px;letter-spacing:0.06em;color:#5E5866">Laser Safety Certified</span>
+      </div>
+      <blockquote style="margin:10px 0 0;border-left:1px solid #C9A092;padding-left:22px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:#5E5866;max-width:480px">“The best treatment is the one you barely notice, except in how confident you feel.”</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section style="padding:110px 0;background:#2A2630;color:#fff;position:relative;overflow:hidden">
+  <span class="ghost" aria-hidden="true" style="right:-20px;bottom:-30px;-webkit-text-stroke:1px rgba(255,255,255,0.1)">Reason</span>
+  <div class="wrap" style="display:grid;grid-template-columns:0.8fr 1.2fr;gap:80px;align-items:start;position:relative">
+    <div>
+      <div class="eyebrow" style="color:#E7CFC6">Why Aurelle</div>
+      <h2 style="font-size:52px;margin-top:18px;color:#fff">Three things we <em style="color:#E7CFC6">never</em> compromise on.</h2>
+    </div>
+    <div>
+      <div style="display:grid;grid-template-columns:70px 1fr;gap:20px;padding:30px 0;border-top:1px solid rgba(255,255,255,0.14)"><i style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:30px;color:#E7CFC6;line-height:1.1">01</i><div><h3 style="font-size:24px;margin-bottom:8px;color:#fff">Medical oversight on every visit</h3><p style="color:rgba(255,255,255,0.72);font-size:14.5px">All treatments are supervised by a licensed dermatologist, not sales staff. You always know who is treating you.</p></div></div>
+      <div style="display:grid;grid-template-columns:70px 1fr;gap:20px;padding:30px 0;border-top:1px solid rgba(255,255,255,0.14)"><i style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:30px;color:#E7CFC6;line-height:1.1">02</i><div><h3 style="font-size:24px;margin-bottom:8px;color:#fff">Honest, no-pressure plans</h3><p style="color:rgba(255,255,255,0.72);font-size:14.5px">We will tell you when a treatment is not right for you. Our consultations are about your skin, not our quotas.</p></div></div>
+      <div style="display:grid;grid-template-columns:70px 1fr;gap:20px;padding:30px 0;border-top:1px solid rgba(255,255,255,0.14);border-bottom:1px solid rgba(255,255,255,0.14)"><i style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:30px;color:#E7CFC6;line-height:1.1">03</i><div><h3 style="font-size:24px;margin-bottom:8px;color:#fff">Technology that is actually proven</h3><p style="color:rgba(255,255,255,0.72);font-size:14.5px">Only FDA-cleared devices and clinically studied protocols. New does not mean better, and we test before we adopt.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" style="padding:120px 0;background:#fff">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px">
+      <div><div class="eyebrow">Real results</div><h2 style="font-size:52px;margin-top:18px">Before &amp; after, <em>unfiltered.</em></h2></div>
+      <p style="max-width:380px;color:#5E5866;font-size:15px">All photos are from Aurelle clients, taken under identical lighting with consent. Individual results vary.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:22px">
+      <figure style="margin:0"><div class="ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative">Photo: before/after, laser<span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff"></span><span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">Before</span><span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">After</span></div><figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:#5E5866"><b style="font-weight:500;color:#2A2630">Laser Resurfacing</b><span>3 sessions</span></figcaption></figure>
+      <figure style="margin:0"><div class="ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative">Photo: before/after, acne<span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff"></span><span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">Before</span><span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">After</span></div><figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:#5E5866"><b style="font-weight:500;color:#2A2630">Acne &amp; Scar Program</b><span>12 weeks</span></figcaption></figure>
+      <figure style="margin:0"><div class="ph" style="border-radius:24px;aspect-ratio:4/4.6;position:relative">Photo: before/after, peel<span style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:#fff"></span><span style="position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">Before</span><span style="position:absolute;bottom:16px;right:16px;font-size:11px;letter-spacing:0.18em;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:999px;color:#2A2630">After</span></div><figcaption style="margin-top:14px;display:flex;justify-content:space-between;font-size:13px;color:#5E5866"><b style="font-weight:500;color:#2A2630">Skin Brightening Peel</b><span>4 sessions</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" style="padding:110px 0 160px;background:#F1ECE4">
+  <div class="wrap">
+    <div style="margin-bottom:56px"><div class="eyebrow">Client stories</div><h2 style="font-size:52px;margin-top:18px">What our clients <em>say.</em></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:22px;align-items:start">
+      <div class="qcard"><span class="stars">★★★★★</span><div class="q">“</div><p>I came in nervous about fillers and left with exactly what I wanted: nobody noticed, but everyone said I looked rested. Dr. Marchetti is incredibly honest.</p><div class="who"><span></span><div><b>Sarah K.</b><small>Dermal fillers, 2 visits</small></div></div></div>
+      <div class="qcard" style="transform:translateY(40px)"><span class="stars">★★★★★</span><div class="q">“</div><p>Three laser sessions and my acne scars are barely visible. The consultation alone was worth it, they explained everything without upselling.</p><div class="who"><span style="background:#E7CFC6"></span><div><b>Daniel R.</b><small>Laser resurfacing</small></div></div></div>
+      <div class="qcard"><span class="stars">★★★★★</span><div class="q">“</div><p>Finally a clinic that told me no. They refused a treatment I asked for and recommended something gentler. My skin has never looked better.</p><div class="who"><span style="background:#D5C4B8"></span><div><b>Amira L.</b><small>Chemical peel program</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="book" style="padding:120px 0">
+  <div class="wrap" style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:70px;align-items:start">
+    <div>
+      <div class="eyebrow">Book a visit</div>
+      <h2 style="font-size:52px;margin:18px 0 22px">Your skin deserves a <em>second opinion.</em></h2>
+      <p style="color:#5E5866;font-size:16px;max-width:420px;margin-bottom:40px">Consultations are 30 minutes and include a digital skin analysis. No commitment, no sales pitch.</p>
+      <div class="hours" style="border:1px solid #E6E0D8;border-radius:24px;padding:28px 30px;background:#fff;max-width:440px">
+        <h4 style="font-size:24px;margin-bottom:16px">Opening hours</h4>
+        <div><span>Monday to Friday</span><b>9:00 AM to 7:00 PM</b></div>
+        <div><span>Saturday</span><b>10:00 AM to 4:00 PM</b></div>
+        <div><span>Sunday</span><b style="color:#8E8793">Closed</b></div>
+        <div><span>Location</span><b>240 Fillmore St, San Francisco</b></div>
+      </div>
+    </div>
+    <form style="background:#fff;border-radius:28px;padding:44px;box-shadow:0 40px 80px -40px rgba(42,38,48,0.25)">
+      <h3 style="font-size:30px;margin-bottom:6px">Request an appointment</h3>
+      <p style="font-size:14px;color:#8E8793;margin-bottom:30px">We will confirm your slot within 2 hours during opening hours.</p>
+      <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:16px">
+        <div class="field"><label for="fn">First name</label><input id="fn" placeholder="Jane"></div>
+        <div class="field"><label for="ln">Last name</label><input id="ln" placeholder="Cooper"></div>
+      </div>
+      <div class="field"><label for="em">Email</label><input id="em" placeholder="jane@email.com"></div>
+      <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:16px">
+        <div class="field"><label for="tr">Treatment</label><select id="tr"><option>Consultation</option><option>Hydrafacial</option><option>Laser Resurfacing</option></select></div>
+        <div class="field"><label for="dt">Preferred date</label><input id="dt" placeholder="Oct 24, 2026"></div>
+      </div>
+      <button type="button" class="btn btn-dark" style="width:100%;justify-content:center;margin-top:8px">Request Appointment</button>
+      <small style="display:block;text-align:center;font-size:12px;color:#8E8793;margin-top:16px">By submitting you agree to our privacy policy. We never share your data.</small>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#2A2630;color:#fff;padding:80px 0 30px">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,0.12)">
+      <div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:10px;color:#fff"><span style="width:30px;height:30px;border-radius:50%;border:1px solid #E7CFC6;display:inline-grid;place-items:center;font-size:14px;color:#E7CFC6;letter-spacing:0">A</span>Aurelle</span>
+        <p style="color:rgba(255,255,255,0.7);font-size:14px;max-width:320px;margin-top:18px">Aesthetic and dermatology clinic in San Francisco. Medical-grade skincare with honest advice.</p>
+      </div>
+      <div><p class="fh5">Treatments</p><ul class="flist"><li>Hydrafacial</li><li>Laser Resurfacing</li><li>Dermal Fillers</li><li>Chemical Peel</li><li>Microneedling</li></ul></div>
+      <div><p class="fh5">Clinic</p><ul class="flist"><li>About</li><li>Our Doctor</li><li>Results</li><li>Reviews</li><li>Careers</li></ul></div>
+      <div><p class="fh5">Contact</p><ul class="flist"><li>240 Fillmore St, SF</li><li>+1 (415) 555 0182</li><li>hello@aurelleclinic.com</li></ul></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:12px;color:rgba(255,255,255,0.6);flex-wrap:wrap;gap:12px">
+      <span>© 2026 Aurelle Skin Clinic. All rights reserved.</span>
+      <div style="display:flex;gap:10px"><span style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:inline-grid;place-items:center;font-size:11px">IG</span><span style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:inline-grid;place-items:center;font-size:11px">FB</span><span style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:inline-grid;place-items:center;font-size:11px">TT</span></div>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7400}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
