@@ -47,6 +47,15 @@ jobs:
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
+      - name: Debug SSH connection
+        env:
+          DEPLOY_HOST: ${{ secrets.SSH_HOST }}
+          DEPLOY_USER: ${{ secrets.SSH_USER }}
+          SSH_OPTS: "-i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
+          REMOTE_ROOT: ${{ secrets.REMOTE_ROOT }}
+        run: |
+          ssh $SSH_OPTS -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" "whoami && test -f '$REMOTE_ROOT/wp-config.php' && echo 'wp-config OK' || echo 'wp-config MISSING at '$REMOTE_ROOT"
+
       - name: Deploy theme
         env:
           DEPLOY_HOST: ${{ secrets.SSH_HOST }}
