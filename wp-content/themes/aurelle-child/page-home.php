@@ -385,11 +385,11 @@
 
       <figure style="margin:0;">
         <div class="au-compare" role="img" aria-label="Laser Resurfacing before and after comparison">
-          <!-- After (dummy, bottom layer) -->
-          <img class="au-compare__after" src="https://placehold.co/600x690/F4E6E1/C9A092?text=After" alt="After laser resurfacing — 3 sessions" draggable="false">
-          <!-- Before (real photo, top layer, clipped) -->
+          <!-- After (bottom layer) -->
+          <img class="au-compare__after" src="<?php echo get_stylesheet_directory_uri(); ?>/images/laser-resurfacing-after.jpg" alt="After laser resurfacing — 3 sessions" draggable="false">
+          <!-- Before (top layer, clipped) -->
           <div class="au-compare__before-wrap">
-            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-laser-resurfacing.jpg" alt="Before laser resurfacing treatment" draggable="false">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/laser-resurfacing-before.jpg" alt="Before laser resurfacing treatment" draggable="false">
           </div>
           <!-- Divider + handle -->
           <div class="au-compare__line">
@@ -408,9 +408,9 @@
 
       <figure style="margin:0;">
         <div class="au-compare" role="img" aria-label="Acne and scar program before and after comparison">
-          <img class="au-compare__after" src="https://placehold.co/600x690/ECE8F4/9B8DB3?text=After" alt="After acne and scar program — 12 weeks" draggable="false">
+          <img class="au-compare__after" src="<?php echo get_stylesheet_directory_uri(); ?>/images/acne_scars_after.jpg" alt="After acne and scar program — 12 weeks" draggable="false">
           <div class="au-compare__before-wrap">
-            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-acne-scar-program.jpg" alt="Before acne and scar treatment" draggable="false">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/acne_scars_before.jpg" alt="Before acne and scar treatment" draggable="false">
           </div>
           <div class="au-compare__line">
             <div class="au-compare__handle" aria-hidden="true">
@@ -428,9 +428,9 @@
 
       <figure style="margin:0;">
         <div class="au-compare" role="img" aria-label="Skin brightening peel before and after comparison">
-          <img class="au-compare__after" src="https://placehold.co/600x690/F1ECE4/B89B6E?text=After" alt="After skin brightening peel — 4 sessions" draggable="false">
+          <img class="au-compare__after" src="<?php echo get_stylesheet_directory_uri(); ?>/images/brightening_after.jpg" alt="After skin brightening peel — 4 sessions" draggable="false">
           <div class="au-compare__before-wrap">
-            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/result-skin-brightening.jpg" alt="Before skin brightening treatment" draggable="false">
+            <img class="au-compare__before" src="<?php echo get_stylesheet_directory_uri(); ?>/images/brightening_before.jpg" alt="Before skin brightening treatment" draggable="false">
           </div>
           <div class="au-compare__line">
             <div class="au-compare__handle" aria-hidden="true">
